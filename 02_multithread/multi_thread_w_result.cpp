@@ -31,6 +31,7 @@ void* check_symmetry(void* input) {
     return (void*)!mismatch;
 }
 
+// ONLY FOR THIS TASK
 double** init_matrix(int size, bool random) {
     double **matrix = new double *[size];
     for (int i = 0; i < size; i++) {
@@ -61,6 +62,7 @@ double** init_matrix(int size, bool random) {
     }
     return matrix;
 }
+// ONLY FOR THIS TASK
 
 int main(int argc, char *argv[]) {
     if (argc < 3) {

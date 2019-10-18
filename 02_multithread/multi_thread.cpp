@@ -1,6 +1,6 @@
 #include <iostream>
-#include <pthread.h>
 #include <random>
+#include <pthread.h>
 
 // structure needed to pass multiple arguments in thread
 struct thread_args {
@@ -93,7 +93,7 @@ int main(int argc, char *argv[]) {
 
         // create thread
         // 1: var to save thread ID
-        // 2: ..
+        // 2: thread attributes
         // 3: function that would run new thread
         // 4: arguments for thread
         pthread_create(&id, NULL, &check_symmetry, (void*)args);
@@ -110,4 +110,5 @@ int main(int argc, char *argv[]) {
         isSymmetric &= (bool)result;
     }
     printf("\nIs symmetric: %d\n", isSymmetric);
+    return 0;
 }

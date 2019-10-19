@@ -8,37 +8,6 @@
 
 #include "settings.h"
 
-/*int main() {
-    int fd_write, fd_read;
-    char buffer[BUFFER_SIZE];
-	struct message client_msg;
-
-    mkfifo(FIFO_PIPE_NAME, PERMS);
-    printf("Server started...\n");
-
-    while (true) {
-        fd_read = open(FIFO_PIPE_NAME, O_RDONLY | O_NONBLOCK);
-        fd_write = open(FIFO_PIPE_NAME, O_WRONLY);
-
-        read(fd_read, &client_msg, sizeof(client_msg));
-        close(fd_read);
-
-        printf("GOT THIS: %s\n", client_msg.text);
-        std::string pid_str = std::to_string(client_msg.client_pid);
-        std::string fifo_name(FIFO_PIPE_NAME);
-        std::string result_pipe = fifo_name + pid_str;
-        printf("Created fifo %s\n", result_pipe.c_str());
-
-        // mkfifo(result_pipe.c_str(), PERMS);
-    	fd_write = open(result_pipe.c_str(), O_WRONLY);
-    	write(fd_write, &client_msg, sizeof(client_msg));
-    	// close(fd_write);
-    }
-
-    unlink(FIFO_PIPE_NAME);
-    return 0;
-}*/
-
 int main() {
 	int fd_server, fd_client, fd_useless;
 	struct message client_msg;

@@ -1,0 +1,74 @@
+struct a {
+    double *arr;
+    double *res;
+    int n;
+    int k;
+    int p;
+};
+
+//////////////////////
+void *action(void *args) {
+
+    double *array = ((struct a *) args)->arr;
+    double *res = ((struct a *) args)->res;
+    int n = ((struct a *) args)->n;
+    int k = ((struct a *) args)->k;
+    int p = ((struct a *) args)->p;
+    int i = k;
+    while (i < n) {
+        for (int j = 0; j < n; j++) {
+        res[i+j*n] = array[j+i*n];
+        }
+        i += p;
+    }
+}
+
+int main(int argc, char *argv[]) {
+
+    /**
+     * Программа считывает имя файла со стандартного потока ввода, затем из этого файла
+     * считывает матрицу и транспонирует ее.
+     */
+
+    int size = atoi(argv[1]);
+    int threads_count = atoi(argv[2]);
+    char b[256];
+    char *buf = b;
+    int read_am = 0;
+    double* arr = malloc(size * size * sizeof(double));
+    double* res = malloc(size * size * sizeof(double));
+
+    write(STDOUT_FILENO, "Enter file name:\n", 17);
+    while (read_am == 0) {
+        read_am = read(STDIN_FILENO, buf, 256);
+        buf[read_am - 1] = '\0';
+    }
+    FILE *file = fopen(buf, "r");
+    double val;
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            fscanf(file, "%lf", &val);
+            arr[i * size + j] = val;
+        }
+    }
+    write(STDOUT_FILENO, "Got the array\n", 14);
+    fclose(file);
+    pthread_t ts[threads_count];
+    for (int i = 0; i < threads_count; i++) {
+        struct a* a_str = (struct a*) malloc(sizeof(struct a));
+        a_str->arr = arr;
+        a_str->res = res;
+        a_str->n = size;
+        a_str->k=i;
+        a_str->p=threads_count;
+        pthread_create(&ts[i], NULL, &action, (void *)a_str);
+    }
+
+    for (int i = 0; i < threads_count; i++) {
+        pthread_join(ts[i], NULL);
+    }
+
+    for(int i = 0; i < size * size; i++) {
+        printf("%lf ", res[i]);
+    }
+}

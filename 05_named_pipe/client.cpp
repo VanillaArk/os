@@ -8,33 +8,6 @@
 
 #include "settings.h"
 
-/*int main() {
-    int fd_write, fd_read;
-    char buffer[BUFFER_SIZE];
-	struct message client_msg;
-	struct message server_msg;
-
-    std::string pid_str = std::to_string(getpid());
-    std::string fifo_name(FIFO_PIPE_NAME);
-    std::string result_pipe = fifo_name + pid_str;
-    mkfifo(result_pipe.c_str(), PERMS);
-
-    printf("Client app v0.1\n");
-    while (true) {
-    	fd_write = open(FIFO_PIPE_NAME, O_WRONLY);
-    	printf("Enter message: ");
-    	scanf("%s", client_msg.text);
-    	write(fd_write, &client_msg, sizeof(client_msg));
-    	close(fd_write);
-
-        fd_read = open(result_pipe.c_str(), O_RDONLY);
-        read(fd_read, &server_msg, sizeof(server_msg));
-        printf("Server said: %s\n", server_msg.text);
-        close(fd_read);
-    }
-    return 0;
-}*/
-
 int main() {
 	int fd_server, fd_client;
 	struct message client_msg;
